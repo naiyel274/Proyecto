@@ -7,8 +7,8 @@ const Stack = createNativeStackNavigator();
 export default function AuthNavegacion() {
   return (
     <Stack.Navigator
-      initialRouteName="Login" // Asegura que siempre inicie en Login
-      screenOptions={{ headerShown: false }} // Oculta el encabezado
+      initialRouteName="Login"
+      screenOptions={{ headerShown: false }} 
     >
       <Stack.Screen
         name="Login"

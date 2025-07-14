@@ -1,7 +1,7 @@
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const API_BASE_URL = "http://192.168.0.7:8000/api";
+const API_BASE_URL = "http://172.30.5.12:8000/api";
 const api = axios.create({
   baseURL: API_BASE_URL,
   headers: {
@@ -13,12 +13,10 @@ const api = axios.create({
 const RutasPublicas = ["/login", "/registrar"];
 
 api.interceptors.request.use(
-  // Verifica si la ruta es pública
   async (config) => {
     const iSRutaPublica = RutasPublicas.some((ruta) => config.url.includes(ruta));
 
     if (!iSRutaPublica) {
-      // Solo añadir token a rutas protegidas
       const userToken = await AsyncStorage.getItem("userToken");
       if (userToken) {
         config.headers.Authorization = `Bearer ${userToken}`;

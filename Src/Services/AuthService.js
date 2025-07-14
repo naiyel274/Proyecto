@@ -1,8 +1,7 @@
-// AuthService.js
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import api from "./conexion";
 
-// Función para iniciar sesión
+
 export const loginUser = async (email, password) => {
   try {
     const response = await api.post("/login", { email, password });
@@ -23,7 +22,7 @@ export const loginUser = async (email, password) => {
   }
 };
 
-// Función para cerrar sesión
+
 export const logoutUser = async () => {
   try {
     await AsyncStorage.removeItem("userToken");

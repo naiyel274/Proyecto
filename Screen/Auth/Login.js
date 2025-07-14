@@ -60,7 +60,7 @@ export default function LoginScreen({ navigation }) {
       <BottonComponent
         title="¿No tienes cuenta? Registrate"
         onPress={() => navigation.navigate("Registro")}
-        style={{ backgroundColor: "#3b82f6" }} // Azul profesional
+        style={{ backgroundColor: "#3b82f6" }} 
       />
     </View>
   );
@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     padding: 16,
-    backgroundColor: "#000000", // Fondo negro
+    backgroundColor: "#000000", 
   },
   title: {
     fontSize: 24,

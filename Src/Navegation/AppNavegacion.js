@@ -21,7 +21,7 @@ export default function AppNavegacion() {
     }
   };
   useEffect(() => {
-    loadToken(); // Cargar el token al iniciar la aplicación
+    loadToken(); 
   }, []);
 
   useEffect(() => {
@@ -33,7 +33,7 @@ export default function AppNavegacion() {
         console.log(
           "La aplicación ha vuelto al primer plano, verificando el token..."
         );
-        loadToken(); // Recargar el token cuando la app vuelve al primer plano
+        loadToken(); 
       }
       appState.current = nextAppState;
     };
@@ -41,17 +41,17 @@ export default function AppNavegacion() {
       "change",
       handleAppStateChange
     );
-    return () => subscription.remove(); // Limpiar el listener al desmontar el componente
+    return () => subscription.remove(); 
   }, []);
 
   useEffect(() => {
     if (!isLoading) {
         const interval = setInterval(() => {
             if (AppState.currentState === "active") {
-                loadToken(); // Recargar el token si la app está activa
+                loadToken(); 
             }
         }, 2000);
-      return () => clearInterval(interval); // No renderizar nada mientras se carga el token
+      return () => clearInterval(interval); 
     }
   }, [isLoading]);
 
@@ -69,6 +69,7 @@ export default function AppNavegacion() {
     </NavigationContainer>
   );
 }
+
 
 
 const Styles = StyleSheet.create({

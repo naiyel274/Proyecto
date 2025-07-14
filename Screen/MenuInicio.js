@@ -1,117 +1,176 @@
-import React from 'react';
+import React, { useRef } from "react";
 import {
-    View,
-    Text,
-    StyleSheet,
-    TouchableOpacity,
-    SafeAreaView,
-    StatusBar,
-    Dimensions
-} from 'react-native';
+  View,
+  Text,
+  StyleSheet,
+  TouchableWithoutFeedback,
+  SafeAreaView,
+  StatusBar,
+  Dimensions,
+  Animated,
+} from "react-native";
 import {
-    MaterialCommunityIcons,
-    FontAwesome5,
-    Feather,
-    Ionicons
-} from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/native';
+  MaterialCommunityIcons,
+  FontAwesome5,
+  Feather,
+  Ionicons,
+} from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 
-const { width } = Dimensions.get('window');
-const itemWidth = (width / 2) - 30;
+const { width } = Dimensions.get("window");
+const itemWidth = width / 2 - 30;
 
 export default function InicioCitas() {
-    const navigation = useNavigation();
+  const navigation = useNavigation();
 
-    const navigateTo = (flowName) => {
-        navigation.navigate(flowName);
+  const navigateTo = (flowName) => {
+    navigation.navigate(flowName);
+  };
+
+  const AnimatedButton = ({ onPress, icon, label }) => {
+    const scale = useRef(new Animated.Value(1)).current;
+
+    const handlePressIn = () => {
+      Animated.spring(scale, {
+        toValue: 0.93,
+        useNativeDriver: true,
+        speed: 30,
+        bounciness: 8,
+      }).start();
+    };
+
+    const handlePressOut = () => {
+      Animated.spring(scale, {
+        toValue: 1,
+        useNativeDriver: true,
+        speed: 30,
+        bounciness: 8,
+      }).start();
     };
 
     return (
-        <SafeAreaView style={styles.safeArea}>
-            <StatusBar barStyle="dark-content" backgroundColor="#ffffff" />
-            <View style={styles.container}>
-                <View style={styles.header}>
-                    <Text style={styles.headerTitle}>Gestión de Citas</Text>
-                    <Text style={styles.headerSubtitle}>Selecciona una opción para continuar</Text>
-                </View>
-
-                <View style={styles.gridContainer}>
-                    <TouchableOpacity style={styles.gridItem} onPress={() => navigateTo('CitasFlow')}>
-                        <MaterialCommunityIcons name="calendar-check" size={45} color="#1f2937" />
-                        <Text style={styles.gridItemText}>Citas</Text>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity style={styles.gridItem} onPress={() => navigateTo('ConsultorioFlow')}>
-                        <FontAwesome5 name="clinic-medical" size={40} color="#1f2937" />
-                        <Text style={styles.gridItemText}>Consultorios</Text>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity style={styles.gridItem} onPress={() => navigateTo('EspecialidadFlow')}>
-                        <Feather name="star" size={45} color="#1f2937" />
-                        <Text style={styles.gridItemText}>Especialidades</Text>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity style={styles.gridItem} onPress={() => navigateTo('MedicoFlow')}>
-                        <Ionicons name="medkit" size={45} color="#1f2937" />
-                        <Text style={styles.gridItemText}>Médicos</Text>
-                    </TouchableOpacity>
-                </View>
-            </View>
-        </SafeAreaView>
+      <TouchableWithoutFeedback
+        onPressIn={handlePressIn}
+        onPressOut={handlePressOut}
+        onPress={onPress}
+      >
+        <Animated.View style={[styles.gridItem, { transform: [{ scale }] }]}>
+          <View style={styles.iconContainer}>{icon}</View>
+          <Text style={styles.gridItemText}>{label}</Text>
+        </Animated.View>
+      </TouchableWithoutFeedback>
     );
+  };
+
+  return (
+    <SafeAreaView style={styles.safeArea}>
+      <StatusBar barStyle="light-content" backgroundColor="#121212" />
+      <View style={styles.container}>
+        <View style={styles.header}>
+          <Text style={styles.headerTitle}>Gestión de Citas</Text>
+          <Text style={styles.headerSubtitle}>
+            Selecciona una opción para continuar
+          </Text>
+        </View>
+
+        <View style={styles.gridContainer}>
+          <AnimatedButton
+            onPress={() => navigateTo("CitasFlow")}
+            icon={
+              <MaterialCommunityIcons
+                name="calendar-check"
+                size={30}
+                color="#facc15"
+              />
+            }
+            label="Citas"
+          />
+          <AnimatedButton
+            onPress={() => navigateTo("ConsultorioFlow")}
+            icon={
+              <FontAwesome5 name="clinic-medical" size={26} color="#10b981" />
+            }
+            label="Consultorios"
+          />
+          <AnimatedButton
+            onPress={() => navigateTo("EspecialidadFlow")}
+            icon={<Feather name="star" size={30} color="#f472b6" />}
+            label="Especialidades"
+          />
+          <AnimatedButton
+            onPress={() => navigateTo("MedicoFlow")}
+            icon={<Ionicons name="medkit" size={30} color="#60a5fa" />}
+            label="Médicos"
+          />
+          <AnimatedButton
+            onPress={() => navigateTo("PacienteFlow")}
+            icon={
+              <Ionicons
+                name="people-circle-outline"
+                size={30}
+                color="#f87171"
+              />
+            }
+            label="Pacientes"
+          />
+        </View>
+      </View>
+    </SafeAreaView>
+  );
 }
 
 const styles = StyleSheet.create({
-    safeArea: {
-        flex: 1,
-        backgroundColor: '#ffffff', // Fondo blanco
-    },
-    container: {
-        flex: 1,
-        backgroundColor: '#ffffff',
-        padding: 20,
-    },
-    header: {
-        alignItems: 'center',
-        marginBottom: 40,
-        marginTop: 20,
-    },
-    headerTitle: {
-        fontSize: 28,
-        fontWeight: 'bold',
-        color: '#111827', // Gris oscuro
-        marginBottom: 5,
-    },
-    headerSubtitle: {
-        fontSize: 16,
-        color: '#6b7280', // Gris medio
-        textAlign: 'center',
-    },
-    gridContainer: {
-        flexDirection: 'row',
-        flexWrap: 'wrap',
-        justifyContent: 'space-around',
-        paddingHorizontal: 5,
-    },
-    gridItem: {
-        width: itemWidth,
-        height: itemWidth,
-        backgroundColor: '#f3f4f6', // Gris muy claro
-        borderRadius: 15,
-        marginVertical: 10,
-        alignItems: 'center',
-        justifyContent: 'center',
-        elevation: 6,
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 4 },
-        shadowOpacity: 0.1,
-        shadowRadius: 4,
-    },
-    gridItemText: {
-        marginTop: 12,
-        fontSize: 16,
-        fontWeight: '600',
-        color: '#1f2937', // Gris oscuro
-        textAlign: 'center',
-    },
+  safeArea: {
+    flex: 1,
+    backgroundColor: "#121212",
+  },
+  container: {
+    flex: 1,
+    backgroundColor: "#121212",
+    padding: 20,
+  },
+  header: {
+    alignItems: "center",
+    marginBottom: 40,
+    marginTop: 20,
+  },
+  headerTitle: {
+    fontSize: 28,
+    fontWeight: "bold",
+    color: "#f1f5f9",
+    marginBottom: 5,
+  },
+  headerSubtitle: {
+    fontSize: 16,
+    color: "#94a3b8",
+    textAlign: "center",
+  },
+  gridContainer: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-around",
+    paddingHorizontal: 5,
+  },
+  gridItem: {
+    alignItems: "center",
+    justifyContent: "center",
+    marginVertical: 12,
+    width: itemWidth,
+  },
+  iconContainer: {
+    backgroundColor: "#0f172a",
+    padding: 18,
+    borderRadius: 100,
+    marginBottom: 10,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+  },
+  gridItemText: {
+    fontSize: 16,
+    fontWeight: "600",
+    color: "#f1f5f9",
+    textAlign: "center",
+  },
 });

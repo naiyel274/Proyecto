@@ -22,7 +22,7 @@ export default function RegistroScreen({ navigation }) {
     }
 
     try {
-      const response = await axios.post("http://192.168.0.7:8000/api/register", {
+      const response = await axios.post("http://172.30.5.12:8000/api/register", {
         name: nombre,
         email: email,
         password: password,
