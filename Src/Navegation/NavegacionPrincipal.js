@@ -1,7 +1,8 @@
 import { Feather, FontAwesome } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import InicioStack from "./Stacks/InicioStack";
-import PerfilScreen from "../../Screen/Perfil/PerfilScreen";
+import PerfilStack from "./Stacks/PerfilStack";
+import EditarPerfilScreen from "../../Screen/Perfil/EditarPerfilScreen";
 import ConfiguracionScreen from "../../Screen/Configuracion/ConfiguracionScreen";
 
 const Tab = createBottomTabNavigator();
@@ -48,7 +49,7 @@ export default function NavegacionPrincipal() {
       />
       <Tab.Screen
         name="Perfil"
-        component={PerfilScreen}
+        component={PerfilStack}
         options={{
           tabBarIcon: ({ color, size }) => (
             <FontAwesome name="user-circle" size={size} color={color} />
@@ -67,5 +68,8 @@ export default function NavegacionPrincipal() {
         }}
       />
     </Tab.Navigator>
+
+       
+
   );
 }

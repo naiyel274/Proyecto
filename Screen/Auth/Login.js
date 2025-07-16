@@ -2,6 +2,8 @@ import { View, Text, TextInput, StyleSheet, Alert } from "react-native";
 import BottonComponent from "../../components/BottonComponent";
 import { useState } from "react";
 import { loginUser } from "../../Src/Services/AuthService";
+import * as Notifications from "expo-notifications";
+
 
 export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState("");
@@ -14,8 +16,16 @@ export default function LoginScreen({ navigation }) {
     try{
       const result = await loginUser(email, password);
       if (result.success) {
+         await Notifications.scheduleNotificationAsync({
+        content: {
+          title: "Inicio de sesión exitoso",
+          body: "Bienvenido de nuevo a la app 🎉",
+        },
+        trigger: { seconds: 2 }, 
+      });
         Alert.alert("Éxito", "Inicio de sesión exitoso", [
           {text: "OK", onPress: () => console.log("Login exitoso, redirigiendo automanticanente....")},
+
         ]);
       }else {
         Alert.alert("Error de Login", result.message || "ocurrio un error al iniciar sesión", );

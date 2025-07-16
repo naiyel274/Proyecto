@@ -64,7 +64,8 @@ export default function ListarEspecialidades() {
       </View>
       <View style={styles.actions}>
         <TouchableOpacity style={styles.actionButton}
-          onPress={() => navigation.navigate("FormularioEspecialidad", { especialidad: item })}
+          onPress={() => navigation.navigate("FormularioEspecialidad", { especialidad: item, onRefresh: fetchEspecialidades })}
+          
         >
           <Ionicons name="create-outline" size={18} color="#10b981" />
         </TouchableOpacity>
@@ -79,7 +80,10 @@ export default function ListarEspecialidades() {
     <View style={styles.container}>
       <TouchableOpacity
         style={styles.addButton}
-        onPress={() => navigation.navigate("FormularioEspecialidad")}
+        onPress={() => navigation.navigate("FormularioEspecialidad" , {onRefresh: fetchEspecialidades
+
+        })}
+        
       >
         <Ionicons name="add-circle-outline" size={24} color="#3b82f6" />
         <Text style={styles.addText}>Nueva Especialidad</Text>

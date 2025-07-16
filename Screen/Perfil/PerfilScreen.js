@@ -78,6 +78,11 @@ export default function PerfilScreen({ navigation }) {
         </Text>
 
         <BottonComponent
+  title="Editar Perfil"
+  onPress={() => navigation.navigate("EditarPerfil", { usuario })}
+/>
+
+        <BottonComponent
           title="Cerrar Sesión"
           onPress={async () => {
             const result = await logoutUser();

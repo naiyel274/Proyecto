@@ -41,7 +41,14 @@ export default function FormularioEspecialidad({ route, navigation }) {
         });
         Alert.alert("Creado", "Especialidad registrada con éxito.");
       }
+
+       
+      if (route.params?.onRefresh) {
+        route.params.onRefresh();
+      }
+
       navigation.goBack();
+
     } catch (error) {
       console.error(error.response?.data);
       Alert.alert("Error", "No se pudo guardar la especialidad.");
